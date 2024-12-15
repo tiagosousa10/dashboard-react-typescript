@@ -6,6 +6,7 @@ export const Container = styled.div`
   padding-left:20px;
   border-right: 1px solid ${props => props.theme.colors.gray};
 `
+
  export const Header = styled.header`
   display:flex;
   align-items:center;
