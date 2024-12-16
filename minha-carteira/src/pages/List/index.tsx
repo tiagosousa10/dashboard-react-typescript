@@ -30,14 +30,7 @@ const List = () => {
 
   const { type } = useParams();
 
-  const months = useMemo(() => {
-    return listOfmonths.map((month, index) => {
-      return {
-        value: index + 1,
-        label: month
-      }
-    })
-  }, [])
+
 
   const pageData = useMemo(() => {
     return type === 'entry-balance' ?
@@ -76,6 +69,15 @@ const List = () => {
 
   }, [pageData]);
 
+  const months = useMemo(() => {
+    return listOfmonths.map((month, index) => {
+      return {
+        value: index + 1,
+        label: month
+      }
+    })
+  }, [])
+
   const handleFrequencyClick = (frequency: string) => {
     const alreadySelected = frequencyFilterSelected.findIndex((item) => item === frequency);
 
@@ -84,6 +86,27 @@ const List = () => {
       setFrequencyFilterSelected(filtered);
     } else {
       setFrequencyFilterSelected((oldSelected) => [...oldSelected, frequency]);
+    }
+  }
+
+  const handleMonthSelected = (month:string) => {
+    try{
+      const parseMonth= (month)
+      setMonthSelected(parseMonth)
+    }catch(e){
+      throw new Error('invalid month value.')
+      console.log('error: ',e)
+    }
+  }
+
+  const handleYearSelected = (year:string) => {
+    try{
+      const parseYear = year
+      setYearSelected(parseYear)
+      
+    }catch(e){
+      throw new Error('invalid year value')
+      console.log('errorYEAR', e)
     }
   }
 
@@ -122,18 +145,18 @@ const List = () => {
 
 
 
-  
+
   return (
     <Container>
       <ContentHeader title={pageData.title} lineColor={pageData.lineColor}>
         <SelectInput
           options={months}
-          onChange={(e) => setMonthSelected(e.target.value)}
+          onChange={(e) => handleMonthSelected(e.target.value)}
           defaultValue={monthSelected}
         />
         <SelectInput
           options={years}
-          onChange={(e) => setYearSelected(e.target.value)}
+          onChange={(e) => handleYearSelected(e.target.value)}
           defaultValue={yearSelected}
         />
       </ContentHeader>
