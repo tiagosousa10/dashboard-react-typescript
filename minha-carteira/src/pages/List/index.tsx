@@ -36,7 +36,7 @@ const List = () => {
     return type === 'entry-balance' ?
       {
         title: 'Entradas',
-        lineColor: '#f79e1b',
+        lineColor: '#4e41f0',
         data: gains
       }
       :
