@@ -9,6 +9,7 @@ import gains from "../../repositories/gains";
 import expenses from "../../repositories/expenses";
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
+import listOfmonths from "../../utils/months";
 
 interface IData {
   id: string;
@@ -21,13 +22,9 @@ interface IData {
 
 const List = () => {
   const [data, setData] = useState<IData[]>([]);
-  const [monthSelected, setMonthSelected] = useState<string>(
-    String(new Date().getMonth() + 1)
+  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
+  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear())
   );
-  const [yearSelected, setYearSelected] = useState<string>(
-    String(new Date().getFullYear())
-  );
-
   const { type } = useParams();
 
   const title = useMemo(() => {
@@ -39,37 +36,56 @@ const List = () => {
   const listData = useMemo(() => {
     return type === "entry-balance" ? gains : expenses;
   }, [type]); // Adicionado 'type' como dependência
-  console.log('listData', listData)
+  //console.log('listData', listData)
 
-  const months = [
-    { value: 1, label: "Janeiro" },
-    { value: 5, label: "Maio" },
-    { value: 7, label: "Julho" },
-  ];
+  const months = useMemo(() => {
+    return listOfmonths.map((month,index) => {
+      return{
+        value:index + 1,
+        label:month
+      }
+    } )
+  }, [])
 
-  const years = [
-    { value: 2020, label: 2020 },
-    { value: 2019, label: 2019 },
-    { value: 2018, label: 2018 },
-  ];
+  const years = useMemo(() => {
+    const uniqueYears : number[] = [];
+
+    listData.forEach(item => {
+      const date= new Date(item.date)
+      const year = date.getFullYear()
+
+      if(!uniqueYears.includes(year)){
+        uniqueYears.push(year)
+      }
+    })
+
+    return uniqueYears.map((year) => {
+      return{
+        value:year,
+        label:year
+      }
+    }
+     
+    )
+  }, [listData])
 
   useEffect(() => {
     const filteredDate = listData.filter((item) => {
       const date = new Date(item.date);
 
       if (isNaN(date.getTime())) {
-        console.warn(`Invalid date detected: ${item.date}`);
+        //console.warn(`Invalid date detected: ${item.date}`);
         return false;
       }
   
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
-      console.log('month:' ,month, 'year:', year)
+      //console.log('month:' ,month, 'year:', year)
 
 
       return month === Number(monthSelected) && year === Number(yearSelected);    });
   
-    console.log("Filtered Data:", filteredDate);
+    //console.log("Filtered Data:", filteredDate);
   
     const formattedData = filteredDate.map((item,index) => {
       return {
@@ -83,7 +99,7 @@ const List = () => {
       };
 
     });
-    console.log("Formatted Data:", formattedData);
+    //console.log("Formatted Data:", formattedData);
     setData(formattedData);
   }, [listData, monthSelected, yearSelected, data.length]);
   
