@@ -1,6 +1,5 @@
 import React from "react";
 import {Container} from './styles'
-import happyImg from '../../assets/sad.svg'
 
 interface IMessageBoxProps {
    title:string,
@@ -19,7 +18,7 @@ const MessageBox  = ({title,description,footerText,icon} : IMessageBoxProps) => 
         </h1>
         <p>{description}</p>
       </header>
-      
+
       <footer>
          <span>{footerText}</span>
       </footer>
