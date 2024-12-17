@@ -4,7 +4,7 @@ import {Container, Content} from './styles'
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
-
+import PieChart from "../../components/PieChart";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
@@ -19,14 +19,6 @@ const Dashboard : React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
     const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
   
-
-  const options = [
-    {value: 'Tiago', label:'Tiago'},
-    {value: 'Joana', label:'Joana'},
-    {value: 'Andre', label:'Andre'},
-
-  ]
-
 
     const years = useMemo(() => {
       const uniqueYears: number[] = [];
@@ -106,6 +98,7 @@ const Dashboard : React.FC = () => {
       return totalGains - totalExpenses;
     },[totalExpenses,totalGains])
 
+
     const message = useMemo(() => {
       if(totalBalance < 0) {
         return {
@@ -114,7 +107,7 @@ const Dashboard : React.FC = () => {
           footerText: "Verifique os seus gastos e tente economizar!",
           icon: sadImg,
         }
-      } else if (totalBalance == 0) {
+      } else if (totalBalance === 0) {
           return {
             title: "Ufaaa!" ,
             description: "Gastas-te exatamente o que gannhas-te.",
@@ -132,27 +125,27 @@ const Dashboard : React.FC = () => {
     }, [])
 
 
-  const handleMonthSelected = (month:string) => {
-    try{
-      const parseMonth= (month)
-      setMonthSelected(parseMonth)
-    }catch(e){
-      throw new Error('invalid month value.')
-      console.log('error: ',e)
+    const handleMonthSelected = (month:string) => {
+      try{
+        const parseMonth= (month)
+        setMonthSelected(parseMonth)
+      }catch(e){
+        throw new Error('invalid month value.')
+        console.log('error: ',e)
+      }
     }
-  }
 
 
-  const handleYearSelected = (year:string) => {
-    try{
-      const parseYear = year
-      setYearSelected(parseYear)
-      
-    }catch(e){
-      throw new Error('invalid year value')
-      console.log('errorYEAR', e)
+    const handleYearSelected = (year:string) => {
+      try{
+        const parseYear = year
+        setYearSelected(parseYear)
+        
+      }catch(e){
+        throw new Error('invalid year value')
+        console.log('errorYEAR', e)
+      }
     }
-  }
 
 
   return(
@@ -201,6 +194,8 @@ const Dashboard : React.FC = () => {
           footerText={message.footerText}
           icon={message.icon}
        />
+
+       <PieChart/>
       </Content>
     </Container>
   )
