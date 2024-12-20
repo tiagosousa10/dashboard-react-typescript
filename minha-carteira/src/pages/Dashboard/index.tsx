@@ -1,6 +1,6 @@
  
  
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {Container, Content} from './styles'
 
 import ContentHeader from "../../components/ContentHeader";
@@ -302,8 +302,8 @@ const Dashboard : React.FC = () => {
     ]
     }, [monthSelected, yearSelected])
 
-
-    const handleMonthSelected = (month:string) => {
+//  useCallback -> memoriza a funcao! != useMemo -> memoriza o valor
+    const handleMonthSelected = useCallback((month:string) => {
       try{
         const parseMonth= (month)
         setMonthSelected(parseMonth)
@@ -311,10 +311,10 @@ const Dashboard : React.FC = () => {
         throw new Error('invalid month value.')
         //console.log('error: ',e)
       }
-    }
+    },[])
 
 
-    const handleYearSelected = (year:string) => {
+    const handleYearSelected = useCallback((year:string) => {
       try{
         const parseYear = year
         setYearSelected(parseYear)
@@ -323,7 +323,7 @@ const Dashboard : React.FC = () => {
         throw new Error('invalid year value')
         //console.log('errorYEAR', e)
       }
-    }
+    },[])
 
 
     
