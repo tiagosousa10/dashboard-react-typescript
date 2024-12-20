@@ -7,16 +7,18 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
 import PieChartBox from "../../components/PieChartBox";
+import MessageBox from "../../components/MessageBox";
+import HistoryBox from "../../components/HistoryBox";
+import BarChartBox from "../../components/BarChartBox";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
+
 import listOfMonths from '../../utils/months'
-import MessageBox from "../../components/MessageBox";
 
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinningImg from '../../assets/grinning.svg'
-import HistoryBox from "../../components/HistoryBox";
 
 const Dashboard : React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
@@ -71,7 +73,7 @@ const Dashboard : React.FC = () => {
           }
         }
       })
-      console.log('totalEXPENSES: ',total)
+      //console.log('totalEXPENSES: ',total)
       return total;
     },[monthSelected,yearSelected])
 
@@ -92,7 +94,7 @@ const Dashboard : React.FC = () => {
           }
         }
       })
-      console.log('totalGAINS: ',total)
+      //console.log('totalGAINS: ',total)
       return total;
     },[monthSelected,yearSelected])
 
@@ -125,7 +127,7 @@ const Dashboard : React.FC = () => {
             icon:happyImg,
           }
       }
-    }, [])
+    }, [totalBalance])
 
 
     const relationExpensesVersusGains = useMemo(() => {
@@ -134,7 +136,7 @@ const Dashboard : React.FC = () => {
       const percentGains =  (totalGains / total) * 100
       const percentExpenses =  (totalExpenses / total) * 100
 
-     // console.log('percent-gains: ',percentGains.toFixed(1),'percent-expenses: ', percentExpenses.toFixed(1))
+     // //console.log('percent-gains: ',percentGains.toFixed(1),'percent-expenses: ', percentExpenses.toFixed(1))
 
       const data = [
         {
@@ -207,13 +209,54 @@ const Dashboard : React.FC = () => {
     },[yearSelected])
 
 
+    const relationExpensevesRecurrentVersusEventual = useMemo(() => {
+      let amountRecurrent = 0;
+      let amountEventual = 0;
+
+      expenses.filter((expense) => {
+        const date = new Date(expense.date)
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+
+        return month === Number(monthSelected) && year === Number(yearSelected)
+      })
+      .forEach((expense) => {
+        if(expense.frequency === 'recorrente') {
+          return amountRecurrent += Number(expense.amount)
+        }
+
+        if(expense.frequency === 'eventual') {
+          return amountEventual += Number(expense.amount)
+        }
+      })
+
+      const total = amountRecurrent + amountEventual;
+      const percent = Number(((amountEventual/total) * 100).toFixed(1))
+
+      return [
+        {
+        name: 'Recorrentes',
+        amount: amountRecurrent,
+        percent: percent,
+        color: '#f7931b'
+      },
+      {
+        name: 'Eventuais',
+        amount: amountEventual,
+        percent: percent,
+        color: '#e44c4e'
+      }
+    ]
+    }, [monthSelected, yearSelected])
+
+
     const handleMonthSelected = (month:string) => {
       try{
         const parseMonth= (month)
         setMonthSelected(parseMonth)
-      }catch(e){
+      }catch{
         throw new Error('invalid month value.')
-        console.log('error: ',e)
+        //console.log('error: ',e)
       }
     }
 
@@ -223,9 +266,9 @@ const Dashboard : React.FC = () => {
         const parseYear = year
         setYearSelected(parseYear)
         
-      }catch(e){
+      }catch{
         throw new Error('invalid year value')
-        console.log('errorYEAR', e)
+        //console.log('errorYEAR', e)
       }
     }
 
@@ -284,6 +327,8 @@ const Dashboard : React.FC = () => {
         lineColorAmountEntry='#f7931b' 
         lineColorAmountOutput='#e44c4e'
        />
+
+       <BarChartBox data={relationExpensevesRecurrentVersusEventual} title="Saídas"/>
       </Content>
     </Container>
   )
