@@ -1,6 +1,7 @@
 import React from "react"
 import { Container , SideLeft, SideRight, LegendContainer , Legend  } from "./styles"
-import {ResponsiveContainer, BarChart, Bar, Cell, } from 'recharts'
+import {ResponsiveContainer, BarChart, Bar, Cell, Tooltip } from 'recharts'
+import formatCurrency from "../../utils/formatCurrency";
 
 interface IBarCharProps {
    title:string;
@@ -33,7 +34,7 @@ const BarChartBox = ({title, data} : IBarCharProps) => {
          <SideRight>
             <ResponsiveContainer>
                <BarChart data={data}>
-                  <Bar dataKey={'amount'}>
+                  <Bar dataKey={'amount'} name={'Valor'}>
                      {data.map((indicator)  => (
                      <Cell 
                         key={indicator.name} 
@@ -41,6 +42,7 @@ const BarChartBox = ({title, data} : IBarCharProps) => {
                      />
                      ))}
                   </Bar>
+                  <Tooltip  cursor={{fill: 'none'}} formatter={(value) => formatCurrency(Number(value))}  />
                </BarChart>
             </ResponsiveContainer>
          </SideRight>
