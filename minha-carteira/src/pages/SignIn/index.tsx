@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import {Container, Logo, Form, FormTitle} from './styles'
 import logoImg from '../../assets/logo.svg'
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
+import { useAuth } from "../../hooks/auth";
+
 const SignIn = () => {
+  const [email,setEmail] = useState<string>('')
+  const [password,setPassword] = useState<string>('')
+
+  const {signIn} = useAuth()
   return(
    <Container>
     <Logo>
@@ -12,12 +18,24 @@ const SignIn = () => {
       <h2>Minha Carteira</h2>
     </Logo>
 
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={() => {signIn(email,password)}}>
       <FormTitle>
         Entrar
       </FormTitle>
-      <Input type="email" required placeholder="e-mail" />
-      <Input type="password" required placeholder="palavra-passe"/>
+      <Input 
+        type="email" 
+        required 
+        placeholder="e-mail" 
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)} 
+      />
+      <Input 
+        type="password" 
+        required 
+        placeholder="palavra-passe" 
+        value={password} 
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
       <Button type="submit">
         Acessar
