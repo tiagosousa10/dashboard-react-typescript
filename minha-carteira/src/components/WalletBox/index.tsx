@@ -35,7 +35,9 @@ const WalletBox = ({title,amount,footerLabel,icon,color} : IWalletBoxProps) => {
       <Container color={color}>
          <span>  {title} </span>
          <h1> 
-            <CountUp  end={amount} prefix="€ " separator="." decimal="," decimals={2}  /> </h1>
+            <strong>€ </strong>
+            <CountUp  end={amount} separator="." decimal="," decimals={2}  />
+         </h1>
          <small> {footerLabel} </small>
          <img src={iconSelected} alt={title} /> 
       </Container>
