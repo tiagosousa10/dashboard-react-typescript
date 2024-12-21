@@ -46,3 +46,24 @@ export const Container = styled.div`
     margin-right: 5px;
   }
  `;
+
+export const MenuItemButton = styled.button`
+  font-size:16px;
+  border:none;
+  background:none;
+  color: ${props => props.theme.colors.info};
+  text-decoration:none;
+  margin: 7px 0;
+  display: flex;
+  align-items:center;
+  transition: opacity .3s;
+
+  &:hover{
+    opacity: .7;
+  }
+
+  > svg {
+    font-size:18px;
+    margin-right: 5px;
+  }
+`;
