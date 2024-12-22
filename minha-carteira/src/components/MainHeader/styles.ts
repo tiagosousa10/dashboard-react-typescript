@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ToggleComponent from '../Toggle'
+
 
 export const Container = styled.div`
   grid-area: MH;
@@ -20,5 +22,9 @@ export const Welcome = styled.div`
 `
 
 export const UserName = styled.div`
+
+`
+
+export const Toggle = styled(ToggleComponent)`
 
 `

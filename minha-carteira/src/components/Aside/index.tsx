@@ -11,7 +11,7 @@ const Aside : React.FC = () => {
 
 
   return(
-    <Container>
+    <Container menuIsOpen={true}>
       <Header>
         <LogImg src={logoImg} alt='logoDaMinhaCarteira' />
         <Title>Carteira</Title>
