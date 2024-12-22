@@ -39,8 +39,7 @@ export const Container = styled.div<IContainerProps>`
   width:40px;
   
   @media (max-width: 600px) {
-    height:25px;
-    width:25px;
+    display:none;
   }
  `; 
 
@@ -97,3 +96,29 @@ export const MenuItemButton = styled.button`
     margin-right: 5px;
   }
 `;
+
+
+export const ToggleMenu =styled.div`
+  width:40px;
+  height:40px;
+  border-radius:5px;
+  font-size:22px;
+  background-color: ${props => props.theme.colors.warning};
+  color:  ${props => props.theme.colors.white};
+  cursor:pointer;
+  transition: opacity .3s ;
+
+  &:hover {
+    opacity: 0.7
+  }
+
+  display:none;
+
+
+  @media (max-width: 600px) {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  
+`
