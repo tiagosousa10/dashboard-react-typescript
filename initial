@@ -1,6 +1,0 @@
-const minhaFuncao = (idade) => {
-  if(idade >= 18)
-    return 'pode'
-  else
-    return 'ainda não'
-}

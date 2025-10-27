@@ -1,40 +1,21 @@
-import React, {useMemo, useState} from "react";
-import {Container, Profile,Welcome , UserName} from './styles'
-import Toggle from '../Toggle'
-
-
+import React, { useMemo } from "react";
 import emojis from "../../utils/emojis";
 
-import { useTheme } from '../../hooks/theme'
-
-const MainHeader : React.FC = () => {
-
-  const {toggleTheme,theme} = useTheme()
-
-  const [darkTheme,setDarkTheme] = useState(() => theme.title === 'dark' ? true : false)
-
-  const handleChangeTheme = () => {
-    setDarkTheme(!darkTheme)
-    toggleTheme()
-  }
-
+const MainHeader: React.FC = () => {
   //gerar um emoji aleatorio
   const emoji = useMemo(() => {
-    const indice = Math.floor(Math.random() * emojis.length)
-    return emojis[indice]
-  }, [])
+    const indice = Math.floor(Math.random() * emojis.length);
+    return emojis[indice];
+  }, []);
 
-
-  return(
-    <Container>
-     <Toggle labelLeft="Light" labelRight="Dark" checked={darkTheme}  onChange={handleChangeTheme}/>
-
-     <Profile>
-      <Welcome>Olaá, {emoji}</Welcome>
-      <UserName>Tiago Sousa</UserName>
-     </Profile>
-    </Container>
-  )
-}
+  return (
+    <div className="bg-card border-b border-border flex justify items-center px-6 py-2 shadow-soft lg:px-8">
+      <div className="text-foreground">
+        <div className="text-sm text-muted-foreground">Olá, {emoji}</div>
+        <div className="font-semibold">Tiago Sousa</div>
+      </div>
+    </div>
+  );
+};
 
 export default MainHeader;

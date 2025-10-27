@@ -1,6 +1,5 @@
-import React, { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Content, Filters } from "./styles";
 
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
@@ -24,91 +23,97 @@ interface IData {
 
 const List = () => {
   const [data, setData] = useState<IData[]>([]);
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
-  const [frequencyFilterSelected, setFrequencyFilterSelected] = useState(['recorrente', 'eventual']);
+  const [monthSelected, setMonthSelected] = useState<string>(
+    String(new Date().getMonth() + 1)
+  );
+  const [yearSelected, setYearSelected] = useState<string>(
+    String(new Date().getFullYear() - 1)
+  );
+  const [frequencyFilterSelected, setFrequencyFilterSelected] = useState([
+    "recorrente",
+    "eventual",
+  ]);
 
   const { type } = useParams();
 
-
-
   const pageData = useMemo(() => {
-    return type === 'entry-balance' ?
-      {
-        title: 'Entradas',
-        lineColor: '#4e41f0',
-        data: gains
-      }
-      :
-      {
-        title: 'Saídas',
-        lineColor: '#e44c4e',
-        data: expenses
-      }
+    return type === "entry-balance"
+      ? {
+          title: "Entradas",
+          lineColor: "#4e41f0",
+          data: gains,
+        }
+      : {
+          title: "Saídas",
+          lineColor: "#e44c4e",
+          data: expenses,
+        };
   }, [type]);
 
   const years = useMemo(() => {
     const uniqueYears: number[] = [];
     const { data } = pageData;
 
-    data.forEach(item => {
+    data.forEach((item) => {
       const date = new Date(item.date);
       const year = date.getFullYear();
 
       if (!uniqueYears.includes(year)) {
         uniqueYears.push(year);
       }
-    })
+    });
 
     return uniqueYears.map((year) => {
       return {
         value: year,
-        label: year
-      }
-    })
-
+        label: year,
+      };
+    });
   }, [pageData]);
 
   const months = useMemo(() => {
     return listOfmonths.map((month, index) => {
       return {
         value: index + 1,
-        label: month
-      }
-    })
-  }, [])
+        label: month,
+      };
+    });
+  }, []);
 
   const handleFrequencyClick = (frequency: string) => {
-    const alreadySelected = frequencyFilterSelected.findIndex((item) => item === frequency);
+    const alreadySelected = frequencyFilterSelected.findIndex(
+      (item) => item === frequency
+    );
 
     if (alreadySelected >= 0) {
-      const filtered = frequencyFilterSelected.filter((item) => item !== frequency);
+      const filtered = frequencyFilterSelected.filter(
+        (item) => item !== frequency
+      );
       setFrequencyFilterSelected(filtered);
     } else {
       setFrequencyFilterSelected((oldSelected) => [...oldSelected, frequency]);
     }
-  }
+  };
 
-  const handleMonthSelected = (month:string) => {
-    try{
-      const parseMonth= (month)
-      setMonthSelected(parseMonth)
-    }catch(e){
-      throw new Error('invalid month value.')
-      console.log('error: ',e)
+  const handleMonthSelected = (month: string) => {
+    try {
+      const parseMonth = month;
+      setMonthSelected(parseMonth);
+    } catch (e) {
+      throw new Error("invalid month value.");
+      console.log("error: ", e);
     }
-  }
+  };
 
-  const handleYearSelected = (year:string) => {
-    try{
-      const parseYear = year
-      setYearSelected(parseYear)
-      
-    }catch(e){
-      throw new Error('invalid year value')
-      console.log('errorYEAR', e)
+  const handleYearSelected = (year: string) => {
+    try {
+      const parseYear = year;
+      setYearSelected(parseYear);
+    } catch (e) {
+      throw new Error("invalid year value");
+      console.log("errorYEAR", e);
     }
-  }
+  };
 
   useEffect(() => {
     const { data } = pageData;
@@ -124,7 +129,11 @@ const List = () => {
       const year = date.getFullYear();
       //console.log('month:' ,month, 'year:', year)
 
-      return month === Number(monthSelected) && year === Number(yearSelected) && frequencyFilterSelected.includes(item.frequency);
+      return (
+        month === Number(monthSelected) &&
+        year === Number(yearSelected) &&
+        frequencyFilterSelected.includes(item.frequency)
+      );
     });
 
     //console.log("Filtered Data:", filteredDate);
@@ -143,43 +152,67 @@ const List = () => {
     setData(formattedData);
   }, [pageData, monthSelected, yearSelected, frequencyFilterSelected]);
 
-
-
-
   return (
-    <Container>
+    <div className="w-full">
       <ContentHeader title={pageData.title} lineColor={pageData.lineColor}>
-        <SelectInput
-          options={months}
-          onChange={(e) => handleMonthSelected(e.target.value)}
-          defaultValue={monthSelected}
-        />
-        <SelectInput
-          options={years}
-          onChange={(e) => handleYearSelected(e.target.value)}
-          defaultValue={yearSelected}
-        />
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor="month"
+            className="text-sm font-medium text-foreground whitespace-nowrap"
+          >
+            Mês:
+          </label>
+          <SelectInput
+            options={months}
+            onChange={(value) => handleMonthSelected(value)}
+            defaultValue={monthSelected}
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor="year"
+            className="text-sm font-medium text-foreground whitespace-nowrap"
+          >
+            Ano:
+          </label>
+          <SelectInput
+            options={years}
+            onChange={(value) => handleYearSelected(value)}
+            defaultValue={yearSelected}
+          />
+        </div>
       </ContentHeader>
 
-      <Filters>
+      <div className="w-full flex justify-center mb-8">
         <button
           type="button"
-          className={`tag-filter tag-filter-recurrent ${frequencyFilterSelected.includes('recorrente') && 'tag-actived'}  `}
-          onClick={() => handleFrequencyClick('recorrente')}
+          className={`text-lg font-medium bg-transparent text-card-foreground mx-2 transition-opacity hover:opacity-70 ${
+            frequencyFilterSelected.includes("recorrente")
+              ? "opacity-100"
+              : "opacity-40"
+          }`}
+          onClick={() => handleFrequencyClick("recorrente")}
         >
           Recorrentes
+          <div className="w-14 mx-auto border-b-2 border-blue-500 mt-1"></div>
         </button>
 
         <button
           type="button"
-          className={`tag-filter tag-filter-eventual ${frequencyFilterSelected.includes('eventual') && 'tag-actived'}`}
-          onClick={() => handleFrequencyClick('eventual')}
+          className={`text-lg font-medium bg-transparent text-card-foreground mx-2 transition-opacity hover:opacity-70 ${
+            frequencyFilterSelected.includes("eventual")
+              ? "opacity-100"
+              : "opacity-40"
+          }`}
+          onClick={() => handleFrequencyClick("eventual")}
         >
           Eventuais
+          <div className="w-14 mx-auto border-b-2 border-orange-500 mt-1"></div>
         </button>
-      </Filters>
+      </div>
 
-      <Content>
+      <main className="space-y-4">
         {data.map((item) => (
           <HistoryFinanceCard
             key={item.id}
@@ -189,8 +222,8 @@ const List = () => {
             amount={item.amountFormated}
           />
         ))}
-      </Content>
-    </Container>
+      </main>
+    </div>
   );
 };
 

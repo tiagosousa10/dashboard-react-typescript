@@ -1,15 +1,14 @@
-import React, {ButtonHTMLAttributes} from "react";
-import { Container } from "./styles";
+import { ButtonHTMLAttributes } from "react";
+import { Button as ShadcnButton } from "@/components/ui/button";
 
-type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement> 
+type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({children, ...rest} : IButtonProps) => {
-   return(
-      <Container  {...rest} >
-         {children}
-      </Container>
-
-   )
-}
+const Button = ({ children, className, ...rest }: IButtonProps) => {
+  return (
+    <ShadcnButton className={className} {...rest}>
+      {children}
+    </ShadcnButton>
+  );
+};
 
 export default Button;
