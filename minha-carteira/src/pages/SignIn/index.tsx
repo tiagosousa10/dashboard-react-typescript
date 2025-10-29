@@ -38,6 +38,7 @@ const SignIn = () => {
               type="email"
               required
               placeholder="e-mail"
+              className="text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -45,6 +46,7 @@ const SignIn = () => {
               type="password"
               required
               placeholder="palavra-passe"
+              className="text-white"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
