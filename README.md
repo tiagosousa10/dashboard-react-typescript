@@ -8,23 +8,23 @@ A modern and responsive web application for personal financial management, devel
 
 ### Login Page
 
-![Login Page](../docs/images/login.png)
+![Login Page](docs/images/login.png)
 
 ### Dashboard - Dark Mode
 
-![Dashboard Dark Mode](../docs/images/dashboard.png)
+![Dashboard Dark Mode](docs/images/dashboard.png)
 
 ### Dashboard - Light Mode
 
-![Dashboard Light Mode](../docs/images/dashboard-light.png)
+![Dashboard Light Mode](docs/images/dashboard-light.png)
 
 ### Income List
 
-![Income List](../docs/images/entrances.png)
+![Income List](docs/images/entrances.png)
 
 ### Expenses List
 
-![Expenses List](../docs/images/exits.png)
+![Expenses List](docs/images/exits.png)
 
 ---
 
