@@ -2,15 +2,116 @@
 
 A modern and responsive web application for personal financial management, developed with React and TypeScript. **My Wallet** allows users to track financial income and expenses, visualize data through interactive charts, and manage their budget efficiently.
 
+---
+
+## 📸 Screenshots
+
+### Login Page
+![Login Page](../docs/images/login.png)
+
+### Dashboard - Dark Mode
+![Dashboard Dark Mode](../docs/images/dashboard.png)
+
+### Dashboard - Light Mode
+![Dashboard Light Mode](../docs/images/dashboard-light.png)
+
+### Income List
+![Income List](../docs/images/entrances.png)
+
+### Expenses List
+![Expenses List](../docs/images/exits.png)
+
+---
+
+## ✨ Key Features
+
+- 📊 **Interactive Dashboard** - Real-time financial overview with beautiful charts and graphs
+- 💰 **Balance Tracking** - Monitor your income, expenses, and balance at a glance
+- 📈 **Data Visualization** - Pie charts, bar charts, and line graphs for comprehensive analysis
+- 🔍 **Smart Filtering** - Filter transactions by month, year, and frequency (recurring/one-time)
+- 🌓 **Dark/Light Theme** - Toggle between themes with smooth transitions
+- 📱 **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
+- 🔐 **Secure Authentication** - Simple and secure login system
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js (version 18 or higher)
+- npm or yarn
+
+### Installation Steps
+
+1. **Navigate to the project folder**
+```bash
+cd minha-carteira
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Start the development server**
+```bash
+npm run dev
+```
+
+4. **Open your browser**
+```
+http://localhost:5173
+```
+
+### Login Credentials
+
+- **Email**: `teste@teste.com`
+- **Password**: `123`
+
+---
+
+## 🎯 Main Features Explained
+
+### Dashboard Overview
+
+The main dashboard provides a comprehensive view of your financial status:
+
+- **Balance Card**: Shows your current balance (income minus expenses)
+- **Income Card**: Displays total income for the selected period
+- **Expenses Card**: Shows total expenses for the selected period
+- **Contextual Messages**: Smart feedback based on your financial situation
+- **Charts**: Visual representations of your financial data
+
+### Interactive Charts
+
+- **Pie Chart**: Visualizes the relationship between income and expenses
+- **Bar Charts**: Compare recurring vs one-time transactions
+- **Line Chart**: Track your financial evolution month by month
+
+### Transaction Management
+
+- View detailed lists of all income and expenses
+- Filter by month and year for specific periods
+- Toggle between recurring and one-time transactions
+- See formatted currency and dates for easy reading
+
+---
+
 ## 📋 Table of Contents
 
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Application Flow](#application-flow)
-- [Installation and Execution](#installation-and-execution)
-- [Authentication](#authentication)
+- [Screenshots](#-screenshots)
+- [Key Features](#-key-features)
+- [Quick Start](#-quick-start)
+- [Main Features Explained](#-main-features-explained)
+- [About the Project](#-about-the-project)
+- [Installation and Execution](#-installation-and-execution)
+- [Authentication](#-authentication)
+- [Technologies Used](#-technologies-used)
+- [Project Structure](#-project-structure)
+- [Application Flow](#-application-flow)
+
+---
 
 ## 🎯 About the Project
 
@@ -23,34 +124,74 @@ A modern and responsive web application for personal financial management, devel
 - Track monthly financial history
 - Toggle between light and dark themes
 
-## ✨ Features
+---
 
-### Main Dashboard
+## 🚀 Installation and Execution
 
-- **WalletBox**: Displays balance, income, and expenses for the selected month
-- **Contextual Messages**: Visual feedback based on financial status
-- **Pie Chart**: Visualization of the relationship between income and expenses
-- **Bar Chart**: Analysis of recurring vs one-time expenses/income
-- **Monthly History**: Line chart showing evolution throughout the year
+### Prerequisites
 
-### List Page
+- Node.js (version 18 or higher)
+- npm or yarn
 
-- Detailed view of all income or expenses
-- Filters by month and year
-- Frequency filters (recurring/one-time)
-- Informative cards with description, amount, and date
+### Steps
 
-### Authentication
+1. **Clone the repository and navigate to the folder**
 
-- Simple login system
-- Session persistence via localStorage
-- Route protection based on authentication
+```bash
+cd minha-carteira
+```
 
-### Theme
+2. **Install dependencies**
 
-- Light and dark mode
-- User preference persistence
-- Smooth transitions between themes
+```bash
+npm install
+```
+
+3. **Run the development server**
+
+```bash
+npm run dev
+```
+
+4. **Access the application**
+
+```
+http://localhost:5173
+```
+
+### Available Scripts
+
+- `npm run dev` - Starts development server
+- `npm run build` - Creates production build
+- `npm run preview` - Preview production build
+- `npm run lint` - Runs ESLint to check code
+
+---
+
+## 🔐 Authentication
+
+### Default Credentials
+
+- **Email**: `teste@teste.com`
+- **Password**: `123`
+
+### Authentication System
+
+Authentication is implemented through a Context API (`AuthProvider`):
+
+- Stores login state in `localStorage`
+- Protects routes based on `logged` state
+- Available functions: `signIn()` and `signOut()`
+
+### Customization
+
+To integrate with a real backend, modify the `useAuth` hook in `src/hooks/auth.tsx`:
+
+- Replace static validation with API calls
+- Implement JWT tokens or sessions
+- Add more robust error handling
+
+---
 
 ## 🛠 Technologies Used
 
@@ -99,6 +240,8 @@ A modern and responsive web application for personal financial management, devel
 - **ESLint 9.15.0** - Linter for JavaScript/TypeScript
 - **TypeScript ESLint 8.15.0** - TypeScript-specific linter
 - **Vite Plugin React SWC 3.5.0** - Vite plugin using SWC for Fast Refresh
+
+---
 
 ## 📁 Project Structure
 
@@ -158,6 +301,8 @@ minha-carteira/
 └── postcss.config.js        # PostCSS configuration
 ```
 
+---
+
 ## 🔄 Application Flow
 
 ### 1. Initialization
@@ -190,12 +335,10 @@ Routes (index.tsx)
 ### 3. Authentication Flow
 
 1. **User accesses the application**
-
    - System checks `localStorage` for existing session
    - If no session exists, redirects to `/` (SignIn)
 
 2. **Login (SignIn)**
-
    - User enters email and password
    - `signIn()` validates credentials (currently: `teste@teste.com` / `123`)
    - If valid: saves to `localStorage` and updates `logged` state
@@ -209,12 +352,10 @@ Routes (index.tsx)
 ### 4. Dashboard Flow
 
 1. **Data Loading**
-
    - Dashboard filters data from `expenses.ts` and `gains.ts`
    - Uses `useMemo` for optimized calculations based on `monthSelected` and `yearSelected`
 
 2. **Calculations Performed**
-
    - `totalExpenses`: Sum of all expenses for selected month/year
    - `totalGains`: Sum of all income for selected month/year
    - `totalBalance`: Difference between income and expenses
@@ -234,12 +375,10 @@ Routes (index.tsx)
 ### 5. List Page Flow
 
 1. **Route Parameters**
-
    - `/list/entry-balance` → Lists income
    - `/list/exit-balance` → Lists expenses
 
 2. **Filters**
-
    - Month and year selection via `SelectInput`
    - Frequency filters (recurring/one-time) via toggle buttons
 
@@ -251,12 +390,10 @@ Routes (index.tsx)
 ### 6. Theme System
 
 1. **Initialization**
-
    - Checks `localStorage` for saved theme
    - If it doesn't exist, uses dark theme as default
 
 2. **Theme Change**
-
    - `toggleTheme()` toggles between light and dark
    - Saves preference to `localStorage`
    - Applies `dark` class to root element when necessary
@@ -265,68 +402,7 @@ Routes (index.tsx)
    - Tailwind CSS automatically applies styles based on `dark` class
    - Smooth transitions between themes
 
-## 🚀 Installation and Execution
-
-### Prerequisites
-
-- Node.js (version 18 or higher)
-- npm or yarn
-
-### Steps
-
-1. **Clone the repository and navigate to the folder**
-
-```bash
-cd minha-carteira
-```
-
-2. **Install dependencies**
-
-```bash
-npm install
-```
-
-3. **Run the development server**
-
-```bash
-npm run dev
-```
-
-4. **Access the application**
-
-```
-http://localhost:5173
-```
-
-### Available Scripts
-
-- `npm run dev` - Starts development server
-- `npm run build` - Creates production build
-- `npm run preview` - Preview production build
-- `npm run lint` - Runs ESLint to check code
-
-## 🔐 Authentication
-
-### Default Credentials
-
-- **Email**: `teste@teste.com`
-- **Password**: `123`
-
-### Authentication System
-
-Authentication is implemented through a Context API (`AuthProvider`):
-
-- Stores login state in `localStorage`
-- Protects routes based on `logged` state
-- Available functions: `signIn()` and `signOut()`
-
-### Customization
-
-To integrate with a real backend, modify the `useAuth` hook in `src/hooks/auth.tsx`:
-
-- Replace static validation with API calls
-- Implement JWT tokens or sessions
-- Add more robust error handling
+---
 
 ## 📊 Data Repositories
 
@@ -339,11 +415,11 @@ Each item has the following structure:
 
 ```typescript
 {
-  description: string; // Transaction description
-  amount: string; // Amount (string for precision)
-  type: string; // "entrada" or "saída"
-  frequency: string; // "recorrente" or "eventual"
-  date: string; // Date in YYYY-MM-DD format
+  description: string;    // Transaction description
+  amount: string;        // Amount (string for precision)
+  type: string;          // "entrada" or "saída"
+  frequency: string;     // "recorrente" or "eventual"
+  date: string;          // Date in YYYY-MM-DD format
 }
 ```
 
