@@ -7,18 +7,23 @@ A modern and responsive web application for personal financial management, devel
 ## 📸 Screenshots
 
 ### Login Page
+
 ![Login Page](../docs/images/login.png)
 
 ### Dashboard - Dark Mode
+
 ![Dashboard Dark Mode](../docs/images/dashboard.png)
 
 ### Dashboard - Light Mode
+
 ![Dashboard Light Mode](../docs/images/dashboard-light.png)
 
 ### Income List
+
 ![Income List](../docs/images/entrances.png)
 
 ### Expenses List
+
 ![Expenses List](../docs/images/exits.png)
 
 ---
@@ -45,21 +50,25 @@ A modern and responsive web application for personal financial management, devel
 ### Installation Steps
 
 1. **Navigate to the project folder**
+
 ```bash
 cd minha-carteira
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 3. **Start the development server**
+
 ```bash
 npm run dev
 ```
 
 4. **Open your browser**
+
 ```
 http://localhost:5173
 ```
@@ -126,7 +135,7 @@ The main dashboard provides a comprehensive view of your financial status:
 
 ---
 
-## 🚀 Installation and Execution
+## 🚀 Installation & Execution
 
 ### Prerequisites
 
@@ -335,10 +344,12 @@ Routes (index.tsx)
 ### 3. Authentication Flow
 
 1. **User accesses the application**
+
    - System checks `localStorage` for existing session
    - If no session exists, redirects to `/` (SignIn)
 
 2. **Login (SignIn)**
+
    - User enters email and password
    - `signIn()` validates credentials (currently: `teste@teste.com` / `123`)
    - If valid: saves to `localStorage` and updates `logged` state
@@ -352,10 +363,12 @@ Routes (index.tsx)
 ### 4. Dashboard Flow
 
 1. **Data Loading**
+
    - Dashboard filters data from `expenses.ts` and `gains.ts`
    - Uses `useMemo` for optimized calculations based on `monthSelected` and `yearSelected`
 
 2. **Calculations Performed**
+
    - `totalExpenses`: Sum of all expenses for selected month/year
    - `totalGains`: Sum of all income for selected month/year
    - `totalBalance`: Difference between income and expenses
@@ -375,10 +388,12 @@ Routes (index.tsx)
 ### 5. List Page Flow
 
 1. **Route Parameters**
+
    - `/list/entry-balance` → Lists income
    - `/list/exit-balance` → Lists expenses
 
 2. **Filters**
+
    - Month and year selection via `SelectInput`
    - Frequency filters (recurring/one-time) via toggle buttons
 
@@ -390,10 +405,12 @@ Routes (index.tsx)
 ### 6. Theme System
 
 1. **Initialization**
+
    - Checks `localStorage` for saved theme
    - If it doesn't exist, uses dark theme as default
 
 2. **Theme Change**
+
    - `toggleTheme()` toggles between light and dark
    - Saves preference to `localStorage`
    - Applies `dark` class to root element when necessary
@@ -415,11 +432,11 @@ Each item has the following structure:
 
 ```typescript
 {
-  description: string;    // Transaction description
-  amount: string;        // Amount (string for precision)
-  type: string;          // "entrada" or "saída"
-  frequency: string;     // "recorrente" or "eventual"
-  date: string;          // Date in YYYY-MM-DD format
+  description: string; // Transaction description
+  amount: string; // Amount (string for precision)
+  type: string; // "entrada" or "saída"
+  frequency: string; // "recorrente" or "eventual"
+  date: string; // Date in YYYY-MM-DD format
 }
 ```
 
